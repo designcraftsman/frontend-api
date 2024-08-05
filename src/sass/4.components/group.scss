@@ -1,0 +1,24 @@
+.group{
+    height: 60px;
+    padding: 10px;
+    .group-profile{
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }   
+    .group-name{
+        font-weight: 700;
+    }
+    .group-last-msg{
+        font-size: .8em;
+        color: $colour-dark-gray2;
+    }
+    .group-last-msg-time{
+        font-size: .8em;
+        text-transform: uppercase;
+    }
+    a , a:hover{
+        text-decoration: none;
+        color: inherit;
+    }
+}

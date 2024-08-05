@@ -1,0 +1,46 @@
+{
+  "name": "lms",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-sass": "node-sass src/sass/main.scss src/css/style.css --watch",
+    "compile-sass": "node-sass src/sass/main.scss src/css/style.comp.css",
+    "concat-css": "concat -o src/css/style.concat.css src/css/additional.css src/css/style.comp.css",
+    "prefix-css": "postcss --use autoprefixer -b 'last 5 versions' src/css/style.concat.css -o src/css/style.prefix.css",
+    "compress-css": "node-sass src/css/style.prefix.css src/css/style.css --output-style compressed",
+    "build-css": "npm-run-all compile-sass concat-css prefix-css compress-css"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.19",
+    "concat": "^1.0.3",
+    "node-sass": "^9.0.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.40",
+    "postcss-cli": "^11.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^6.25.1",
+    "sass": "^1.77.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "vite": "^5.3.5"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "vite.config.js",
+  "author": "",
+  "license": "ISC"
+}

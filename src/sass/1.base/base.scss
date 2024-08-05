@@ -1,0 +1,14 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Montserrat', sans-serif;
+    color: $colour-black;
+    .underline{
+        text-decoration: underline !important;
+    }
+    a, a:hover{
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+}

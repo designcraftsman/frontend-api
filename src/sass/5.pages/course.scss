@@ -1,0 +1,32 @@
+.course-list{
+    font-size: .9em;
+    .course-list-columns{
+        color: $colour-black;
+        text-transform: uppercase;
+    }
+    .course-list-columns , .course{
+        height: 90px;
+        margin-top: 15px;
+        padding-left: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* X-offset Y-offset Blur-radius Color */
+    }
+    .couse-head{
+        height: 40px !important;
+    }
+    .course, .course a{
+        text-decoration: none;
+        color: $colour-transparent-grey;
+        &:hover{
+            color: $colour-transparent-black;
+        }
+    }
+    .course{
+        .row{
+            img{
+                width: 150px;
+                max-height: 80px;
+                object-fit: cover;
+            }
+        }
+    }
+}
