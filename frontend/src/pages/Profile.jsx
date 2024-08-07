@@ -123,7 +123,7 @@ function Profile(props) {
               <label htmlFor="profileImageInput" role='button'>
                 <i className="bi bi-camera-fill fs-6 p-1"></i>
               </label>
-              <input type="file" id="profileImageInput" name="image" onChange={previewImage} style={{ display: 'none' }} />
+              <input type="file" id="profileImageInput" name="image"  onChange={(e) => previewImage(e)} style={{ display: 'none' }} />
             </div>
           </div>
         </div>

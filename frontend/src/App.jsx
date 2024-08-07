@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import UserMenu from './components/UserMenu';
@@ -63,6 +63,62 @@ function App(props) {
     return <Outlet />;
   }
 
+  // User Info
+  const navigate = useNavigate();
+  const [token, setToken] = useState(null);
+  const [teacher, setTeacher] = useState({});
+  const [idTeacher, setIdTeacher] = useState(null);
+  const [imgurl, setImgUrl] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+      setToken(storedToken);
+  }, []);
+
+  useEffect(() => {
+    const storedIdTeacher = localStorage.getItem('idteacher');
+    setIdTeacher(storedIdTeacher);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      getTeacher();
+    }
+  }, [token]);
+
+  const getTeacher = async () => {
+    try {
+      const response = await fetch(`http://localhost:4200/teachers/get/${idTeacher}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch teacher');
+      }
+
+      const teacherData = await response.json();
+      setImgUrl(teacherData.imgurl);
+      setTeacher(teacherData);
+      setFirstName(teacherData.firstname);
+      setLastName(teacherData.lastname);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  // Signout function
+  const handleSignout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('idteacher');
+    navigate('/sign-in');
+  };
+
   return (
     <div className="container-fluid" data-bs-theme="light" onContextMenu={handleContextMenu}>
       <ContextMenu isVisible={contextMenu.isVisible} position={contextMenu.position} onClose={handleCloseMenu} />
@@ -110,8 +166,12 @@ function App(props) {
                 id="toggleUserCollapse"
                 className="user btn btn-link p-0"
                 onClick={handleToggle}
-              >
-                <img src={Y} alt="profile" className="profile-img me-3" />
+              > 
+                {imgurl ? (
+                  <img src={imgurl} alt="profile" className="profile-img me-3" />
+                ) : (
+                  <img src={Y} alt="profile" className="profile-img me-3" />
+                )}
               </button>
 
               <div
@@ -121,7 +181,7 @@ function App(props) {
               >
                 <div className="card card-body p-2 shadow-lg user-menu">
                   <h2 className="fw-normal p-3 fs-5">
-                    Bonjour<span> {props.user.firstname} !</span>
+                    Bonjour<span> {firstname+''+lastname} !</span>
                   </h2>
                   <hr className="m-1" />
                   <nav className="p-0">
@@ -151,7 +211,7 @@ function App(props) {
                       </li>
                       <hr></hr>
                       <li className="border-dark m-0 p-0">
-                        <a
+                        <a onClick={handleSignout}
                           className="text-decoration-none d-block m-1 p-3 bg-dark3-on-hover"
                           href="sign-in"
                         >
