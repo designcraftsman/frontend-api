@@ -1,5 +1,6 @@
 import React, {useEffect , useState} from 'react';
 import CourseCard from '../components/CourseCard.jsx';
+import { useNavigate } from 'react-router-dom';
 import AssignementCard from '../components/AssignementCard.jsx';
 import OffCanvasCourse from '../components/OffCanvasCourse.jsx';
 import PropTypes from 'prop-types';
@@ -7,7 +8,8 @@ import { courseShape, assignmentShape } from '../types/types.js';
 
 const Dashboard = ({ enrolledCourses = [],bookmarksCourses = [], recommendedCourses = [], assignments = [] }) => {
 
-
+  const navigate = useNavigate();
+  const [token, setToken] = useState(null);
   const [showOffCanvas, setShowOffCanvas] = useState(false);
 
   const handleShow = () => setShowOffCanvas(true);
@@ -19,6 +21,15 @@ const Dashboard = ({ enrolledCourses = [],bookmarksCourses = [], recommendedCour
         exploreBtn.style.display = "none";
     }
 };
+
+useEffect(() => {
+  const storedToken = localStorage.getItem('token');
+  if (!storedToken) {
+      navigate('/sign-in');
+  } else {
+      setToken(storedToken);
+  }
+}, [navigate]);
 
     useEffect(() => {
         removeExploreButton();

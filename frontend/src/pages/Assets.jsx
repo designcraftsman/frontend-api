@@ -11,15 +11,15 @@ const Assets = () => {
   const [assets, setAssets] = useState([]);
 
   useEffect(() => {
-      const storedToken = localStorage.getItem('token');
-      setToken(storedToken);
-  }, []);
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+        navigate('/sign-in');
+    } else {
+        setToken(storedToken);
+    }
+  }, [navigate]);
 
   const getAssets = async () => {
-      if (!token) {
-          navigate('/sign-in');
-          return;
-      }
       try {
           const response = await fetch('http://localhost:4200/assets', {
               method: 'GET',

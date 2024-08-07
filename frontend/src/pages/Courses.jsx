@@ -11,14 +11,14 @@ function Courses() {
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        setToken(storedToken);
-    }, []);
+        if (!storedToken) {
+            navigate('/sign-in');
+        } else {
+            setToken(storedToken);
+        }
+    }, [navigate]);
 
     const getCourses = async () => {
-        if (!token) {
-            navigate('/sign-in');
-            return;
-        }
         try {
             const response = await fetch('http://localhost:4200/courses/', {
                 method: 'GET',

@@ -11,9 +11,13 @@ const Students = () => {
   const [idTeacher, setIdTeacher] = useState(null);
 
   useEffect(() => {
-      const storedToken = localStorage.getItem('token');
-      setToken(storedToken);
-  }, []);
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+        navigate('/sign-in');
+    } else {
+        setToken(storedToken);
+    }
+  }, [navigate]);
 
   useEffect(() => {
       const storedIdTeacher = localStorage.getItem('idteacher');
@@ -22,10 +26,6 @@ const Students = () => {
   console.log(idTeacher);
 
   const getStudents = async () => {
-      if (!token) {
-          navigate('/sign-in');
-          return;
-      }
       try {
           const response = await fetch('http://localhost:4200/students', {
               method: 'GET',
